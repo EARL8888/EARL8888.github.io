@@ -1,0 +1,983 @@
+<!DOCTYPE HTML><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="“Content-Security-Policy”" content="“upgrade-insecure-requests”/"><title>Android开发人员不得不收集的代码(不断更新中...) | 农民艺术家</title><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><meta name="author" content="earl"><meta name="description" content="尺寸相关dp与px转换/**
+* dp转px
+*/
+public static int dp2px(Context context, float dpValue) {
+    final float scale = context.getResources().getDisplayMetrics().density;
+    return (int) (dpValue * scale + 0.5f"><meta property="og:type" content="article"><meta property="og:title" content="Android开发人员不得不收集的代码(不断更新中...)"><meta property="og:url" content="http://xinliu.vip/xinliu/a902b6cf/index.html"><meta property="og:site_name" content="农民艺术家"><meta property="og:description" content="尺寸相关dp与px转换/**
+* dp转px
+*/
+public static int dp2px(Context context, float dpValue) {
+    final float scale = context.getResources().getDisplayMetrics().density;
+    return (int) (dpValue * scale + 0.5f"><meta property="og:updated_time" content="2018-03-30T14:45:29.762Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Android开发人员不得不收集的代码(不断更新中...)"><meta name="twitter:description" content="尺寸相关dp与px转换/**
+* dp转px
+*/
+public static int dp2px(Context context, float dpValue) {
+    final float scale = context.getResources().getDisplayMetrics().density;
+    return (int) (dpValue * scale + 0.5f"><link rel="alternative" href="/atom.xml" title="农民艺术家" type="application/atom+xml"><link rel="icon" href="/img/favicon.ico"><link rel="apple-touch-icon" href="/img/jacman.jpg"><link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg"><link rel="stylesheet" href="/css/style.css"></head></html><body><header><div><div id="imglogo"><a href="/"><img src="/img/logo.png" alt="农民艺术家" title="农民艺术家"></a></div><div id="textlogo"><h1 class="site-name"><a href="/" title="农民艺术家">农民艺术家</a></h1><h2 class="blog-motto">Keep Calm and Carry On</h2></div><div class="navbar"><a class="navbutton navmobile" href="#" title="菜单"></a></div><nav class="animated"><ul><ul><li><a href="/">主页</a></li><li><a href="/archives">归档</a></li><li><a href="/about">简介</a></li><li></li></ul></ul></nav></div></header><div id="container"><div id="main" class="post" itemscope itemprop="blogPost"><article itemprop="articleBody"><header class="article-info clearfix"><h1 itemprop="name"><a href="/xinliu/a902b6cf/" title="Android开发人员不得不收集的代码(不断更新中...)" itemprop="url">Android开发人员不得不收集的代码(不断更新中...)</a></h1><p class="article-author">By <a href="/about" title="earl" target="_blank" itemprop="author">earl</a></p><p class="article-time"><span class="head-plus">阅读<i class="fa fa-user"></i><span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>次, </span><span class="head-plus"><i class="fa fa-comments"></i><span class="ds-thread-count" data-thread-key="xinliu/a902b6cf/"><i class="fa fa-spinner fa-spin"></i></span> </span><time datetime="2016-09-09T06:30:58.000Z" itemprop="datePublished">发表于 2016-09-09</time></p></header><div class="article-content"><div id="toc" class="toc-article"><strong class="toc-title">文章目录</strong><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#尺寸相关"><span class="toc-number">1.</span> <span class="toc-text">尺寸相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dp与px转换"><span class="toc-number">1.1.</span> <span class="toc-text">dp与px转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sp与px转换"><span class="toc-number">1.2.</span> <span class="toc-text">sp与px转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#各种单位转换"><span class="toc-number">1.3.</span> <span class="toc-text">各种单位转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在onCreate-即可获取View的宽高"><span class="toc-number">1.4.</span> <span class="toc-text">在onCreate()即可获取View的宽高</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ListView中提前测量View尺寸"><span class="toc-number">1.5.</span> <span class="toc-text">ListView中提前测量View尺寸</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手机相关"><span class="toc-number">2.</span> <span class="toc-text">手机相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#判断设备是否是手机"><span class="toc-number">2.1.</span> <span class="toc-text">判断设备是否是手机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取当前设备的IMIE，需与上面的isPhone一起使用"><span class="toc-number">2.2.</span> <span class="toc-text">获取当前设备的IMIE，需与上面的isPhone一起使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取手机状态信息"><span class="toc-number">2.3.</span> <span class="toc-text">获取手机状态信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#是否有SD卡"><span class="toc-number">2.4.</span> <span class="toc-text">是否有SD卡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取MAC地址"><span class="toc-number">2.5.</span> <span class="toc-text">获取MAC地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取手机厂商，如Xiaomi"><span class="toc-number">2.6.</span> <span class="toc-text">获取手机厂商，如Xiaomi</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取手机型号，如MI2SC"><span class="toc-number">2.7.</span> <span class="toc-text">获取手机型号，如MI2SC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#跳转至拨号界面"><span class="toc-number">2.8.</span> <span class="toc-text">跳转至拨号界面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拨打电话"><span class="toc-number">2.9.</span> <span class="toc-text">拨打电话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发送短信"><span class="toc-number">2.10.</span> <span class="toc-text">发送短信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取手机联系人"><span class="toc-number">2.11.</span> <span class="toc-text">获取手机联系人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#直接打开手机联系人界面，并获取联系人号码"><span class="toc-number">2.12.</span> <span class="toc-text">直接打开手机联系人界面，并获取联系人号码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取手机短信并保存到xml中"><span class="toc-number">2.13.</span> <span class="toc-text">获取手机短信并保存到xml中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络相关"><span class="toc-number">3.</span> <span class="toc-text">网络相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#打开网络设置界面"><span class="toc-number">3.1.</span> <span class="toc-text">打开网络设置界面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断是否网络连接"><span class="toc-number">3.2.</span> <span class="toc-text">判断是否网络连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断wifi是否连接状态"><span class="toc-number">3.3.</span> <span class="toc-text">判断wifi是否连接状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取移动网络运营商名称，如中国联通、中国移动、中国电信"><span class="toc-number">3.4.</span> <span class="toc-text">获取移动网络运营商名称，如中国联通、中国移动、中国电信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#返回移动终端类型"><span class="toc-number">3.5.</span> <span class="toc-text">返回移动终端类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断手机连接的网络类型-2G-3G-4G"><span class="toc-number">3.6.</span> <span class="toc-text">判断手机连接的网络类型(2G,3G,4G)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断当前手机的网络类型-WIFI还是2-3-4G"><span class="toc-number">3.7.</span> <span class="toc-text">判断当前手机的网络类型(WIFI还是2,3,4G)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#App相关"><span class="toc-number">4.</span> <span class="toc-text">App相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装指定路径下的Apk"><span class="toc-number">4.1.</span> <span class="toc-text">安装指定路径下的Apk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#卸载指定包名的App"><span class="toc-number">4.2.</span> <span class="toc-text">卸载指定包名的App</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取App名称"><span class="toc-number">4.3.</span> <span class="toc-text">获取App名称</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取当前App版本号"><span class="toc-number">4.4.</span> <span class="toc-text">获取当前App版本号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取当前App版本Code"><span class="toc-number">4.5.</span> <span class="toc-text">获取当前App版本Code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#打开指定包名的App应用信息界面"><span class="toc-number">4.6.</span> <span class="toc-text">打开指定包名的App应用信息界面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分享Apk信息"><span class="toc-number">4.7.</span> <span class="toc-text">分享Apk信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取App信息的一个封装类-包名、版本号、应用信息、图标、名称等"><span class="toc-number">4.8.</span> <span class="toc-text">获取App信息的一个封装类(包名、版本号、应用信息、图标、名称等)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断当前App处于前台还是后台"><span class="toc-number">4.9.</span> <span class="toc-text">判断当前App处于前台还是后台</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#屏幕相关"><span class="toc-number">5.</span> <span class="toc-text">屏幕相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取手机分辨率"><span class="toc-number">5.1.</span> <span class="toc-text">获取手机分辨率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取状态栏高度"><span class="toc-number">5.2.</span> <span class="toc-text">获取状态栏高度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取状态栏高度＋标题栏-ActionBar-高度"><span class="toc-number">5.3.</span> <span class="toc-text">获取状态栏高度＋标题栏(ActionBar)高度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取屏幕截图"><span class="toc-number">5.4.</span> <span class="toc-text">获取屏幕截图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置透明状态栏，需在setContentView之前调用"><span class="toc-number">5.5.</span> <span class="toc-text">设置透明状态栏，需在setContentView之前调用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#键盘相关"><span class="toc-number">6.</span> <span class="toc-text">键盘相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#避免输入法面板遮挡"><span class="toc-number">6.1.</span> <span class="toc-text">避免输入法面板遮挡</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态隐藏软键盘"><span class="toc-number">7.</span> <span class="toc-text">动态隐藏软键盘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#点击屏幕空白区域隐藏软键盘"><span class="toc-number">7.1.</span> <span class="toc-text">点击屏幕空白区域隐藏软键盘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态显示软键盘"><span class="toc-number">7.2.</span> <span class="toc-text">动态显示软键盘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#切换键盘显示与否状态"><span class="toc-number">7.3.</span> <span class="toc-text">切换键盘显示与否状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正则相关"><span class="toc-number">8.</span> <span class="toc-text">正则相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#正则工具类"><span class="toc-number">8.1.</span> <span class="toc-text">正则工具类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加解密相关"><span class="toc-number">9.</span> <span class="toc-text">加解密相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MD5加密"><span class="toc-number">9.1.</span> <span class="toc-text">MD5加密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SHA加密"><span class="toc-number">9.2.</span> <span class="toc-text">SHA加密</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#未归类"><span class="toc-number">10.</span> <span class="toc-text">未归类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取服务是否开启"><span class="toc-number">10.1.</span> <span class="toc-text">获取服务是否开启</span></a></li></ol></li></ol></div><h2 id="尺寸相关"><a href="#尺寸相关" class="headerlink" title="尺寸相关"></a>尺寸相关</h2><h3 id="dp与px转换"><a href="#dp与px转换" class="headerlink" title="dp与px转换"></a>dp与px转换</h3><pre><code>/**
+* dp转px
+*/
+public static int dp2px(Context context, float dpValue) {
+    final float scale = context.getResources().getDisplayMetrics().density;
+    return (int) (dpValue * scale + 0.5f);
+}
+
+/**
+* px转dp
+*/
+public static int px2dp(Context context, float pxValue) {
+    final float scale = context.getResources().getDisplayMetrics().density;
+    return (int) (pxValue / scale + 0.5f);
+}
+</code></pre><h3 id="sp与px转换"><a href="#sp与px转换" class="headerlink" title="sp与px转换"></a>sp与px转换</h3><pre><code>/**
+* sp转px
+*/
+public static int sp2px(Context context, float spValue) {
+    final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+    return (int) (spValue * fontScale + 0.5f);
+}
+
+/**
+* px转sp
+*/
+public static int px2sp(Context context, float pxValue) {
+    final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+    return (int) (pxValue / fontScale + 0.5f);
+}
+</code></pre><h3 id="各种单位转换"><a href="#各种单位转换" class="headerlink" title="各种单位转换"></a>各种单位转换</h3><pre><code>// 该方法存在于TypedValue
+/**
+* 各种单位转换
+*/
+public static float applyDimension(int unit, float value, DisplayMetrics metrics) {
+    switch (unit) {
+        case TypedValue.COMPLEX_UNIT_PX:
+            return value;
+        case TypedValue.COMPLEX_UNIT_DIP:
+            return value * metrics.density;
+        case TypedValue.COMPLEX_UNIT_SP:
+            return value * metrics.scaledDensity;
+        case TypedValue.COMPLEX_UNIT_PT:
+            return value * metrics.xdpi * (1.0f / 72);
+        case TypedValue.COMPLEX_UNIT_IN:
+            return value * metrics.xdpi;
+        case TypedValue.COMPLEX_UNIT_MM:
+            return value * metrics.xdpi * (1.0f / 25.4f);
+    }
+    return 0;
+}
+</code></pre><h3 id="在onCreate-即可获取View的宽高"><a href="#在onCreate-即可获取View的宽高" class="headerlink" title="在onCreate()即可获取View的宽高"></a>在onCreate()即可获取View的宽高</h3><pre><code>/**
+* 在onCreate()即可获取View的宽高
+*/
+public static int[] getViewMeasure(View view) {
+    int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+    int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+    view.measure(widthMeasureSpec, heightMeasureSpec);
+    return new int[]{view.getMeasuredWidth(), view.getMeasuredHeight()};
+}
+</code></pre><h3 id="ListView中提前测量View尺寸"><a href="#ListView中提前测量View尺寸" class="headerlink" title="ListView中提前测量View尺寸"></a>ListView中提前测量View尺寸</h3><pre><code>// 通知父布局，占用的宽，高；
+/**
+* ListView中提前测量View尺寸，如headerView
+*/
+private void measureView(View view) {
+    ViewGroup.LayoutParams p = view.getLayoutParams();
+    if (p == null) {
+        p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+//第一个参数spec =0,mode是UNSPECIFIED(未指定)，父元素不对子元素施加任何束缚,第二个参数，是外边距和内边距
+int width = ViewGroup.getChildMeasureSpec(0, 0, p.width);
+　　int height; int tempHeight = p.height; 
+　　if (tempHeight &gt; 0) { 
+　　height = MeasureSpec.makeMeasureSpec(tempHeight, MeasureSpec.EXACTLY); 
+　　　　} else { 
+　　　　height = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED); 
+　　　　} 
+　　view.measure(width, height); 
+}
+</code></pre><h2 id="手机相关"><a href="#手机相关" class="headerlink" title="手机相关"></a>手机相关</h2><h3 id="判断设备是否是手机"><a href="#判断设备是否是手机" class="headerlink" title="判断设备是否是手机"></a>判断设备是否是手机</h3><pre><code>/**
+* 判断设备是否是手机
+*/
+public static boolean isPhone(Context context) {
+    TelephonyManager telephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+    return telephony.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE;
+}
+</code></pre><h3 id="获取当前设备的IMIE，需与上面的isPhone一起使用"><a href="#获取当前设备的IMIE，需与上面的isPhone一起使用" class="headerlink" title="获取当前设备的IMIE，需与上面的isPhone一起使用"></a>获取当前设备的IMIE，需与上面的isPhone一起使用</h3><pre><code>/**
+* 获取当前设备的IMIE，需与上面的isPhone一起使用
+*/
+public static String getDeviceIMEI(Context context) {
+    String deviceId;
+    if (isPhone(context)) {
+        TelephonyManager telephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        deviceId = telephony.getDeviceId();
+    } else {
+        deviceId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+    return deviceId;
+}
+</code></pre><h3 id="获取手机状态信息"><a href="#获取手机状态信息" class="headerlink" title="获取手机状态信息"></a>获取手机状态信息</h3><pre><code>// 需添加权限&lt;uses-permission android:name=&quot;android.permission.READ_PHONE_STATE&quot;/&gt;
+/**
+* 获取手机状态信息
+*
+* 返回如下
+* DeviceId(IMEI) = 99000311726612
+* DeviceSoftwareVersion = 00
+* Line1Number =
+* NetworkCountryIso = cn
+* NetworkOperator = 46003
+* NetworkOperatorName = 中国电信
+* NetworkType = 6
+* honeType = 2
+* SimCountryIso = cn
+* SimOperator = 46003
+* SimOperatorName = 中国电信
+* SimSerialNumber = 89860315045710604022
+* SimState = 5
+* SubscriberId(IMSI) = 460030419724900
+* VoiceMailNumber = *86
+*/
+public static String getPhoneStatus(Context context) {
+    TelephonyManager tm = (TelephonyManager) context
+            .getSystemService(Context.TELEPHONY_SERVICE);
+    String str = &quot;&quot;;
+    str += &quot;DeviceId(IMEI) = &quot; + tm.getDeviceId() + &quot;\n&quot;;
+    str += &quot;DeviceSoftwareVersion = &quot; + tm.getDeviceSoftwareVersion() + &quot;\n&quot;;
+    str += &quot;Line1Number = &quot; + tm.getLine1Number() + &quot;\n&quot;;
+    str += &quot;NetworkCountryIso = &quot; + tm.getNetworkCountryIso() + &quot;\n&quot;;
+    str += &quot;NetworkOperator = &quot; + tm.getNetworkOperator() + &quot;\n&quot;;
+    str += &quot;NetworkOperatorName = &quot; + tm.getNetworkOperatorName() + &quot;\n&quot;;
+    str += &quot;NetworkType = &quot; + tm.getNetworkType() + &quot;\n&quot;;
+    str += &quot;honeType = &quot; + tm.getPhoneType() + &quot;\n&quot;;
+    str += &quot;SimCountryIso = &quot; + tm.getSimCountryIso() + &quot;\n&quot;;
+    str += &quot;SimOperator = &quot; + tm.getSimOperator() + &quot;\n&quot;;
+    str += &quot;SimOperatorName = &quot; + tm.getSimOperatorName() + &quot;\n&quot;;
+    str += &quot;SimSerialNumber = &quot; + tm.getSimSerialNumber() + &quot;\n&quot;;
+    str += &quot;SimState = &quot; + tm.getSimState() + &quot;\n&quot;;
+    str += &quot;SubscriberId(IMSI) = &quot; + tm.getSubscriberId() + &quot;\n&quot;;
+    str += &quot;VoiceMailNumber = &quot; + tm.getVoiceMailNumber() + &quot;\n&quot;;
+    return str;
+}
+</code></pre><h3 id="是否有SD卡"><a href="#是否有SD卡" class="headerlink" title="是否有SD卡"></a>是否有SD卡</h3><pre><code>/**
+* 是否有SD卡
+*/
+public static boolean haveSDCard() {
+    return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+}
+</code></pre><h3 id="获取MAC地址"><a href="#获取MAC地址" class="headerlink" title="获取MAC地址"></a>获取MAC地址</h3><pre><code>// 需添加权限&lt;uses-permission android:name=&quot;android.permission.ACCESS_WIFI_STATE&quot;/&gt;
+/**
+* 获取MAC地址
+*/
+public static String getMacAddress(Context context) {
+    String macAddress;
+    WifiManager wifi = (WifiManager) context
+            .getSystemService(Context.WIFI_SERVICE);
+    WifiInfo info = wifi.getConnectionInfo();
+    macAddress = info.getMacAddress();
+    if (null == macAddress) {
+        return &quot;&quot;;
+    }
+    macAddress = macAddress.replace(&quot;:&quot;, &quot;&quot;);
+    return macAddress;
+}
+</code></pre><h3 id="获取手机厂商，如Xiaomi"><a href="#获取手机厂商，如Xiaomi" class="headerlink" title="获取手机厂商，如Xiaomi"></a>获取手机厂商，如Xiaomi</h3><pre><code>/**
+* 获取手机厂商，如Xiaomi
+*/
+public static String getOsName() {
+    String MANUFACTURER = Build.MANUFACTURER;
+    return MANUFACTURER;
+}
+</code></pre><h3 id="获取手机型号，如MI2SC"><a href="#获取手机型号，如MI2SC" class="headerlink" title="获取手机型号，如MI2SC"></a>获取手机型号，如MI2SC</h3><pre><code>/**
+* 获取手机型号，如MI2SC
+*/
+private String getModel() {
+    String model = android.os.Build.MODEL;
+    if (model != null) {
+        model = model.trim().replaceAll(&quot;\\s*&quot;, &quot;&quot;);
+    } else {
+        model = &quot;&quot;;
+    }
+    return model;
+}
+</code></pre><h3 id="跳转至拨号界面"><a href="#跳转至拨号界面" class="headerlink" title="跳转至拨号界面"></a>跳转至拨号界面</h3><pre><code>/**
+* 跳转至拨号界面
+*/
+public static void callDial(Context context, String phoneNumber) {
+    context.startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(&quot;tel:&quot; + phoneNumber)));
+}
+</code></pre><h3 id="拨打电话"><a href="#拨打电话" class="headerlink" title="拨打电话"></a>拨打电话</h3><pre><code>/**
+* 拨打电话
+*/
+public static void call(Context context, String phoneNumber) {
+    context.startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(&quot;tel:&quot; + phoneNumber)));
+}
+</code></pre><h3 id="发送短信"><a href="#发送短信" class="headerlink" title="发送短信"></a>发送短信</h3><pre><code>/**
+* 发送短信
+*/
+public static void sendSms(Context context, String phoneNumber, String content) {
+    Uri uri = Uri.parse(&quot;smsto:&quot; + (TextUtils.isEmpty(phoneNumber) ? &quot;&quot; : phoneNumber));
+    Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+    intent.putExtra(&quot;sms_body&quot;, TextUtils.isEmpty(content) ? &quot;&quot; : content);
+    context.startActivity(intent);
+}
+</code></pre><h3 id="获取手机联系人"><a href="#获取手机联系人" class="headerlink" title="获取手机联系人"></a>获取手机联系人</h3><pre><code>/**
+* 获取手机联系人
+*/
+public static List&lt;HashMap&lt;String, String&gt;&gt; getAllContactInfo(Context context) {
+    SystemClock.sleep(3000);
+    ArrayList&lt;HashMap&lt;String, String&gt;&gt; list = new ArrayList&lt;HashMap&lt;String, String&gt;&gt;();
+    // 1.获取内容解析者
+    ContentResolver resolver = context.getContentResolver();
+    // 2.获取内容提供者的地址:com.android.contacts
+    // raw_contacts表的地址 :raw_contacts
+    // view_data表的地址 : data
+    // 3.生成查询地址
+    Uri raw_uri = Uri.parse(&quot;content://com.android.contacts/raw_contacts&quot;);
+    Uri date_uri = Uri.parse(&quot;content://com.android.contacts/data&quot;);
+    // 4.查询操作,先查询raw_contacts,查询contact_id
+    // projection : 查询的字段
+    Cursor cursor = resolver.query(raw_uri, new String[] { &quot;contact_id&quot; },
+            null, null, null);
+    // 5.解析cursor
+    while (cursor.moveToNext()) {
+        // 6.获取查询的数据
+        String contact_id = cursor.getString(0);
+        // cursor.getString(cursor.getColumnIndex(&quot;contact_id&quot;));//getColumnIndex
+        // : 查询字段在cursor中索引值,一般都是用在查询字段比较多的时候
+        // 判断contact_id是否为空
+        if (!TextUtils.isEmpty(contact_id)) {//null   &quot;&quot;
+            // 7.根据contact_id查询view_data表中的数据
+            // selection : 查询条件
+            // selectionArgs :查询条件的参数
+            // sortOrder : 排序
+            // 空指针: 1.null.方法 2.参数为null
+            Cursor c = resolver.query(date_uri, new String[] { &quot;data1&quot;,
+                            &quot;mimetype&quot; }, &quot;raw_contact_id=?&quot;,
+                    new String[] { contact_id }, null);
+            HashMap&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();
+            // 8.解析c
+            while (c.moveToNext()) {
+                // 9.获取数据
+                String data1 = c.getString(0);
+                String mimetype = c.getString(1);
+                // 10.根据类型去判断获取的data1数据并保存
+                if (mimetype.equals(&quot;vnd.android.cursor.item/phone_v2&quot;)) {
+                    // 电话
+                    map.put(&quot;phone&quot;, data1);
+                } else if (mimetype.equals(&quot;vnd.android.cursor.item/name&quot;)) {
+                    // 姓名
+                    map.put(&quot;name&quot;, data1);
+                }
+            }
+            // 11.添加到集合中数据
+            list.add(map);
+            // 12.关闭cursor
+            c.close();
+        }
+    }
+    // 12.关闭cursor
+    cursor.close();
+    return list;
+}
+</code></pre><h3 id="直接打开手机联系人界面，并获取联系人号码"><a href="#直接打开手机联系人界面，并获取联系人号码" class="headerlink" title="直接打开手机联系人界面，并获取联系人号码"></a>直接打开手机联系人界面，并获取联系人号码</h3><pre><code>// 在按钮点击事件中设置Intent，
+Intent intent = new Intent();
+intent.setAction(&quot;android.intent.action.PICK&quot;);
+intent.addCategory(&quot;android.intent.category.DEFAULT&quot;);
+intent.setType(&quot;vnd.android.cursor.dir/phone_v2&quot;);
+startActivityForResult(intent, 1);
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (data != null) {
+        Uri uri = data.getData();
+        String num = null;
+        // 创建内容解析者
+        ContentResolver contentResolver = getContentResolver();
+        Cursor cursor = contentResolver.query(uri,
+                null, null, null, null);
+        while (cursor.moveToNext()) {
+            num = cursor.getString(cursor.getColumnIndex(&quot;data1&quot;));
+        }
+        cursor.close();
+        num = num.replaceAll(&quot;-&quot;, &quot;&quot;);//替换的操作,555-6 -&gt; 5556
+    }
+}
+</code></pre><h3 id="获取手机短信并保存到xml中"><a href="#获取手机短信并保存到xml中" class="headerlink" title="获取手机短信并保存到xml中"></a>获取手机短信并保存到xml中</h3><pre><code>/**
+* 获取手机短信并保存到xml中
+*/
+    public static void getAllSMS(Context context) {
+        //1.获取短信
+        //1.1获取内容解析者
+        ContentResolver resolver = context.getContentResolver();
+        //1.2获取内容提供者地址   sms,sms表的地址:null  不写
+        //1.3获取查询路径
+        Uri uri = Uri.parse(&quot;content://sms&quot;);
+        //1.4.查询操作
+        //projection : 查询的字段
+        //selection : 查询的条件
+        //selectionArgs : 查询条件的参数
+        //sortOrder : 排序
+        Cursor cursor = resolver.query(uri, new String[]{&quot;address&quot;, &quot;date&quot;, &quot;type&quot;, &quot;body&quot;}, null, null, null);
+        //设置最大进度
+        int count = cursor.getCount();//获取短信的个数
+        //2.备份短信
+        //2.1获取xml序列器
+        XmlSerializer xmlSerializer = Xml.newSerializer();
+        try {
+            //2.2设置xml文件保存的路径
+            //os : 保存的位置
+            //encoding : 编码格式
+            xmlSerializer.setOutput(new FileOutputStream(new File(&quot;/mnt/sdcard/backupsms.xml&quot;)), &quot;utf-8&quot;);
+            //2.3设置头信息
+            //standalone : 是否独立保存
+            xmlSerializer.startDocument(&quot;utf-8&quot;, true);
+            //2.4设置根标签
+            xmlSerializer.startTag(null, &quot;smss&quot;);
+            //1.5.解析cursor
+            while (cursor.moveToNext()) {
+                SystemClock.sleep(1000);
+                //2.5设置短信的标签
+                xmlSerializer.startTag(null, &quot;sms&quot;);
+                //2.6设置文本内容的标签
+                xmlSerializer.startTag(null, &quot;address&quot;);
+                String address = cursor.getString(0);
+                //2.7设置文本内容
+                xmlSerializer.text(address);
+                xmlSerializer.endTag(null, &quot;address&quot;);
+                xmlSerializer.startTag(null, &quot;date&quot;);
+                String date = cursor.getString(1);
+                xmlSerializer.text(date);
+                xmlSerializer.endTag(null, &quot;date&quot;);
+                xmlSerializer.startTag(null, &quot;type&quot;);
+                String type = cursor.getString(2);
+                xmlSerializer.text(type);
+                xmlSerializer.endTag(null, &quot;type&quot;);
+                xmlSerializer.startTag(null, &quot;body&quot;);
+                String body = cursor.getString(3);
+                xmlSerializer.text(body);
+                xmlSerializer.endTag(null, &quot;body&quot;);
+                xmlSerializer.endTag(null, &quot;sms&quot;);
+                System.out.println(&quot;address:&quot; + address + &quot;   date:&quot; + date + &quot;  type:&quot; + type + &quot;  body:&quot; + body);
+            }
+            xmlSerializer.endTag(null, &quot;smss&quot;);
+            xmlSerializer.endDocument();
+            //2.8将数据刷新到文件中
+            xmlSerializer.flush();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+</code></pre><h2 id="网络相关"><a href="#网络相关" class="headerlink" title="网络相关"></a>网络相关</h2><h3 id="打开网络设置界面"><a href="#打开网络设置界面" class="headerlink" title="打开网络设置界面"></a>打开网络设置界面</h3><pre><code>/**
+* 打开网络设置界面
+*/
+public static void openSetting(Activity activity) {
+    Intent intent = new Intent(&quot;/&quot;);
+    ComponentName cm = new ComponentName(&quot;com.android.settings&quot;,
+            &quot;com.android.settings.WirelessSettings&quot;);
+    intent.setComponent(cm);
+    intent.setAction(&quot;android.intent.action.VIEW&quot;);
+    activity.startActivityForResult(intent, 0);
+}
+</code></pre><h3 id="判断是否网络连接"><a href="#判断是否网络连接" class="headerlink" title="判断是否网络连接"></a>判断是否网络连接</h3><pre><code>/**
+* 判断是否网络连接
+*/
+public static boolean isOnline(Context context) {
+    ConnectivityManager manager = (ConnectivityManager) context
+            .getSystemService(Activity.CONNECTIVITY_SERVICE);
+    NetworkInfo info = manager.getActiveNetworkInfo();
+    if (info != null &amp;&amp; info.isConnected()) {
+        return true;
+    }
+    return false;
+}
+</code></pre><h3 id="判断wifi是否连接状态"><a href="#判断wifi是否连接状态" class="headerlink" title="判断wifi是否连接状态"></a>判断wifi是否连接状态</h3><pre><code>/**
+* 判断wifi是否连接状态
+*/
+public static boolean isWifi(Context context) {
+    ConnectivityManager cm = (ConnectivityManager) context
+            .getSystemService(Context.CONNECTIVITY_SERVICE);
+    return cm != null &amp;&amp; cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI;
+}
+</code></pre><h3 id="获取移动网络运营商名称，如中国联通、中国移动、中国电信"><a href="#获取移动网络运营商名称，如中国联通、中国移动、中国电信" class="headerlink" title="获取移动网络运营商名称，如中国联通、中国移动、中国电信"></a>获取移动网络运营商名称，如中国联通、中国移动、中国电信</h3><pre><code>/**
+* 获取移动网络运营商名称，如中国联通、中国移动、中国电信
+*/
+public static String getNetworkOperatorName(Context context) {
+    TelephonyManager telephonyManager = (TelephonyManager) context
+            .getSystemService(Context.TELEPHONY_SERVICE);
+    return telephonyManager.getNetworkOperatorName();
+}
+</code></pre><h3 id="返回移动终端类型"><a href="#返回移动终端类型" class="headerlink" title="返回移动终端类型"></a>返回移动终端类型</h3><pre><code>// PHONE_TYPE_NONE :0 手机制式未知
+// PHONE_TYPE_GSM :1 手机制式为GSM，移动和联通
+// PHONE_TYPE_CDMA :2 手机制式为CDMA，电信
+// PHONE_TYPE_SIP:3
+/**
+* 返回移动终端类型
+*/
+public static int getPhoneType(Context context) {
+    TelephonyManager telephonyManager = (TelephonyManager) context
+            .getSystemService(Context.TELEPHONY_SERVICE);
+    return telephonyManager.getPhoneType();
+}
+</code></pre><h3 id="判断手机连接的网络类型-2G-3G-4G"><a href="#判断手机连接的网络类型-2G-3G-4G" class="headerlink" title="判断手机连接的网络类型(2G,3G,4G)"></a>判断手机连接的网络类型(2G,3G,4G)</h3><pre><code>// 联通的3G为UMTS或HSDPA，移动和联通的2G为GPRS或EGDE，电信的2G为CDMA，电信的3G为EVDO
+public class Constants {
+    /**
+     * Unknown network class
+     */
+    public static final int NETWORK_CLASS_UNKNOWN = 0;
+    /**
+     * wifi net work
+     */
+    public static final int NETWORK_WIFI = 1;
+    /**
+     * &quot;2G&quot; networks
+     */
+    public static final int NETWORK_CLASS_2_G = 2;
+    /**
+     * &quot;3G&quot; networks
+     */
+    public static final int NETWORK_CLASS_3_G = 3;
+    /**
+     * &quot;4G&quot; networks
+     */
+    public static final int NETWORK_CLASS_4_G = 4;
+}
+/**
+* 判断手机连接的网络类型(2G,3G,4G)
+*/
+public static int getNetWorkClass(Context context) {
+    TelephonyManager telephonyManager = (TelephonyManager) context
+            .getSystemService(Context.TELEPHONY_SERVICE);
+    switch (telephonyManager.getNetworkType()) {
+        case TelephonyManager.NETWORK_TYPE_GPRS:
+        case TelephonyManager.NETWORK_TYPE_EDGE:
+        case TelephonyManager.NETWORK_TYPE_CDMA:
+        case TelephonyManager.NETWORK_TYPE_1xRTT:
+        case TelephonyManager.NETWORK_TYPE_IDEN:
+            return Constants.NETWORK_CLASS_2_G;
+        case TelephonyManager.NETWORK_TYPE_UMTS:
+        case TelephonyManager.NETWORK_TYPE_EVDO_0:
+        case TelephonyManager.NETWORK_TYPE_EVDO_A:
+        case TelephonyManager.NETWORK_TYPE_HSDPA:
+        case TelephonyManager.NETWORK_TYPE_HSUPA:
+        case TelephonyManager.NETWORK_TYPE_HSPA:
+        case TelephonyManager.NETWORK_TYPE_EVDO_B:
+        case TelephonyManager.NETWORK_TYPE_EHRPD:
+        case TelephonyManager.NETWORK_TYPE_HSPAP:
+            return Constants.NETWORK_CLASS_3_G;
+        case TelephonyManager.NETWORK_TYPE_LTE:
+            return Constants.NETWORK_CLASS_4_G;
+        default:
+            return Constants.NETWORK_CLASS_UNKNOWN;
+    }
+}
+</code></pre><h3 id="判断当前手机的网络类型-WIFI还是2-3-4G"><a href="#判断当前手机的网络类型-WIFI还是2-3-4G" class="headerlink" title="判断当前手机的网络类型(WIFI还是2,3,4G)"></a>判断当前手机的网络类型(WIFI还是2,3,4G)</h3><pre><code>/**
+* 判断当前手机的网络类型(WIFI还是2,3,4G)，需要用到上面的方法
+*/
+public static int getNetWorkStatus(Context context) {
+    int netWorkType = Constants.NETWORK_CLASS_UNKNOWN;
+    ConnectivityManager connectivityManager = (ConnectivityManager) context
+            .getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+    if (networkInfo != null &amp;&amp; networkInfo.isConnected()) {
+        int type = networkInfo.getType();
+        if (type == ConnectivityManager.TYPE_WIFI) {
+            netWorkType = Constants.NETWORK_WIFI;
+        } else if (type == ConnectivityManager.TYPE_MOBILE) {
+            netWorkType = getNetWorkClass(context);
+        }
+    }
+    return netWorkType;
+}
+</code></pre><h2 id="App相关"><a href="#App相关" class="headerlink" title="App相关"></a>App相关</h2><h3 id="安装指定路径下的Apk"><a href="#安装指定路径下的Apk" class="headerlink" title="安装指定路径下的Apk"></a>安装指定路径下的Apk</h3><pre><code>/**
+* 安装指定路径下的Apk
+*/
+public void installApk(String filePath) {
+    Intent intent = new Intent();
+    intent.setAction(&quot;android.intent.action.VIEW&quot;);
+    intent.addCategory(&quot;android.intent.category.DEFAULT&quot;);
+    intent.setDataAndType(Uri.fromFile(new File(filePath)), &quot;application/vnd.android.package-archive&quot;);
+    startActivityForResult(intent, 0);
+}
+</code></pre><h3 id="卸载指定包名的App"><a href="#卸载指定包名的App" class="headerlink" title="卸载指定包名的App"></a>卸载指定包名的App</h3><pre><code>/**
+* 卸载指定包名的App
+*/
+public void uninstallApp(String packageName) {
+    Intent intent = new Intent();
+    intent.setAction(&quot;android.intent.action.DELETE&quot;);
+    intent.addCategory(&quot;android.intent.category.DEFAULT&quot;);
+    intent.setData(Uri.parse(&quot;package:&quot; + packageName));
+    startActivityForResult(intent, 0);
+}
+</code></pre><h3 id="获取App名称"><a href="#获取App名称" class="headerlink" title="获取App名称"></a>获取App名称</h3><pre><code>/**
+* 获取App名称
+*/
+public static String getAppName(Context context) {
+    try {
+        PackageManager packageManager = context.getPackageManager();
+        PackageInfo packageInfo = packageManager.getPackageInfo(
+                context.getPackageName(), 0);
+        int labelRes = packageInfo.applicationInfo.labelRes;
+        return context.getResources().getString(labelRes);
+    } catch (NameNotFoundException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+</code></pre><h3 id="获取当前App版本号"><a href="#获取当前App版本号" class="headerlink" title="获取当前App版本号"></a>获取当前App版本号</h3><pre><code>/**
+* 获取当前App版本号
+*/
+public static String getVersionName(Context context) {
+    String versionName = null;
+    PackageManager pm = context.getPackageManager();
+    PackageInfo info = null;
+    try {
+        info = pm.getPackageInfo(context.getApplicationContext().getPackageName(), 0);
+    } catch (NameNotFoundException e) {
+        e.printStackTrace();
+    }
+    if (info != null) {
+        versionName = info.versionName;
+    }
+    return versionName;
+}
+</code></pre><h3 id="获取当前App版本Code"><a href="#获取当前App版本Code" class="headerlink" title="获取当前App版本Code"></a>获取当前App版本Code</h3><pre><code>/**
+*获取当前App版本Code
+*/public static int getVersionCode(Context context) {
+ int versionCode = 0;
+ PackageManager pm = context.getPackageManager();
+ PackageInfo info = null;
+ try {
+  info = pm.getPackageInfo(context.getApplicationContext().getPackageName(), 0);
+ } catch (PackageManager.NameNotFoundException e) {
+  e.printStackTrace();
+ }
+ if (info != null) {
+  versionCode = info.versionCode;
+ }
+ return versionCode;
+}
+
+
+/**
+*打开指定包名的App
+*/
+public void openOtherApp(String packageName){
+ PackageManager manager = getPackageManager();
+ Intent launchIntentForPackage = manager.getLaunchIntentForPackage(packageName);
+ if (launchIntentForPackage != null) {
+  startActivity(launchIntentForPackage);
+ }
+}
+</code></pre><h3 id="打开指定包名的App应用信息界面"><a href="#打开指定包名的App应用信息界面" class="headerlink" title="打开指定包名的App应用信息界面"></a>打开指定包名的App应用信息界面</h3><pre><code>/**
+* 打开指定包名的App应用信息界面
+*/
+public void showAppInfo(String packageName) {
+    Intent intent = new Intent();
+    intent.setAction(&quot;android.settings.APPLICATION_DETAILS_SETTINGS&quot;);
+    intent.setData(Uri.parse(&quot;package:&quot; + packageName));
+    startActivity(intent);
+}
+</code></pre><h3 id="分享Apk信息"><a href="#分享Apk信息" class="headerlink" title="分享Apk信息"></a>分享Apk信息</h3><pre><code>/**
+* 分享Apk信息
+*/
+public void shareApkInfo(String info) {
+    Intent intent = new Intent();
+    intent.setAction(&quot;android.intent.action.SEND&quot;);
+    intent.addCategory(&quot;android.intent.category.DEFAULT&quot;);
+    intent.setType(&quot;text/plain&quot;);
+    intent.putExtra(Intent.EXTRA_TEXT, info);
+    startActivity(intent);
+}
+</code></pre><h3 id="获取App信息的一个封装类-包名、版本号、应用信息、图标、名称等"><a href="#获取App信息的一个封装类-包名、版本号、应用信息、图标、名称等" class="headerlink" title="获取App信息的一个封装类(包名、版本号、应用信息、图标、名称等)"></a>获取App信息的一个封装类(包名、版本号、应用信息、图标、名称等)</h3><pre><code>/**
+* 获取App信息的一个封装类(包名、版本号、应用信息、图标、名称等)
+*/
+public class AppEnging {
+    public static List&lt;AppInfo&gt; getAppInfos(Context context) {
+        List&lt;AppInfo&gt; list = new ArrayList&lt;AppInfo&gt;();
+        //获取应用程序信息
+        //包的管理者
+        PackageManager pm = context.getPackageManager();
+        //获取系统中安装到所有软件信息
+        List&lt;PackageInfo&gt; installedPackages = pm.getInstalledPackages(0);
+        for (PackageInfo packageInfo : installedPackages) {
+            //获取包名
+            String packageName = packageInfo.packageName;
+            //获取版本号
+            String versionName = packageInfo.versionName;
+            //获取application
+            ApplicationInfo applicationInfo = packageInfo.applicationInfo;
+            int uid = applicationInfo.uid;
+            //获取应用程序的图标
+            Drawable icon = applicationInfo.loadIcon(pm);
+            //获取应用程序的名称
+            String name = applicationInfo.loadLabel(pm).toString();
+            //是否是用户程序
+            //获取应用程序中相关信息,是否是系统程序和是否安装到SD卡
+            boolean isUser;
+            int flags = applicationInfo.flags;
+            if ((applicationInfo.FLAG_SYSTEM &amp; flags) == applicationInfo.FLAG_SYSTEM) {
+                //系统程序
+                isUser = false;
+            } else {
+                //用户程序
+                isUser = true;
+            }
+            //是否安装到SD卡
+            boolean isSD;
+            if ((applicationInfo.FLAG_EXTERNAL_STORAGE &amp; flags) == applicationInfo.FLAG_EXTERNAL_STORAGE) {
+                //安装到了SD卡
+                isSD = true;
+            } else {
+                //安装到手机中
+                isSD = false;
+            }
+            //添加到bean中
+            AppInfo appInfo = new AppInfo(name, icon, packageName, versionName, isSD, isUser);
+            //将bean存放到list集合
+            list.add(appInfo);
+        }
+        return list;
+    }
+}
+
+// 封装软件信息的bean类
+class AppInfo {
+    //名称
+    private String name;
+    //图标
+    private Drawable icon;
+    //包名
+    private String packagName;
+    //版本号
+    private String versionName;
+    //是否安装到SD卡
+    private boolean isSD;
+    //是否是用户程序
+    private boolean isUser;
+
+    public AppInfo() {
+        super();
+    }
+
+    public AppInfo(String name, Drawable icon, String packagName,
+                   String versionName, boolean isSD, boolean isUser) {
+        super();
+        this.name = name;
+        this.icon = icon;
+        this.packagName = packagName;
+        this.versionName = versionName;
+        this.isSD = isSD;
+        this.isUser = isUser;
+    }
+}
+</code></pre><h3 id="判断当前App处于前台还是后台"><a href="#判断当前App处于前台还是后台" class="headerlink" title="判断当前App处于前台还是后台"></a>判断当前App处于前台还是后台</h3><pre><code>// 需添加&lt;uses-permission android:name=&quot;android.permission.GET_TASKS&quot;/&gt;
+// 并且必须是系统应用该方法才有效
+/**
+* 判断当前App处于前台还是后台
+*/
+public static boolean isApplicationBackground(final Context context) {
+    ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+    @SuppressWarnings(&quot;deprecation&quot;)
+    List&lt;ActivityManager.RunningTaskInfo&gt; tasks = am.getRunningTasks(1);
+    if (!tasks.isEmpty()) {
+        ComponentName topActivity = tasks.get(0).topActivity;
+        if (!topActivity.getPackageName().equals(context.getPackageName())) {
+            return true;
+        }
+    }
+    return false;
+}
+</code></pre><h2 id="屏幕相关"><a href="#屏幕相关" class="headerlink" title="屏幕相关"></a>屏幕相关</h2><h3 id="获取手机分辨率"><a href="#获取手机分辨率" class="headerlink" title="获取手机分辨率"></a>获取手机分辨率</h3><pre><code>/**
+* 获取屏幕的宽度px
+*/
+public static int getDeviceWidth(Context context) {
+    WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+    DisplayMetrics outMetrics = new DisplayMetrics();// 创建了一张白纸
+    windowManager.getDefaultDisplay().getMetrics(outMetrics);// 给白纸设置宽高
+    return outMetrics.widthPixels;
+}
+
+/**
+* 获取屏幕的高度px
+*/
+public static int getDeviceHeight(Context context) {
+    WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+    DisplayMetrics outMetrics = new DisplayMetrics();// 创建了一张白纸
+    windowManager.getDefaultDisplay().getMetrics(outMetrics);// 给白纸设置宽高
+    return outMetrics.heightPixels;
+}
+</code></pre><h3 id="获取状态栏高度"><a href="#获取状态栏高度" class="headerlink" title="获取状态栏高度"></a>获取状态栏高度</h3><pre><code>/**
+* 获取状态栏高度
+*/
+public int getStatusBarHeight() {
+    int result = 0;
+    int resourceId = getResources().getIdentifier(&quot;status_bar_height&quot;, &quot;dimen&quot;, &quot;android&quot;);
+    if (resourceId &gt; 0) {
+        result = getResources().getDimensionPixelSize(resourceId);
+    }
+    return result;
+}
+</code></pre><h3 id="获取状态栏高度＋标题栏-ActionBar-高度"><a href="#获取状态栏高度＋标题栏-ActionBar-高度" class="headerlink" title="获取状态栏高度＋标题栏(ActionBar)高度"></a>获取状态栏高度＋标题栏(ActionBar)高度</h3><pre><code>/**
+* 获取状态栏高度＋标题栏(ActionBar)高度
+*/
+public static int getTopBarHeight(Activity activity) {
+    return activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
+}
+</code></pre><h3 id="获取屏幕截图"><a href="#获取屏幕截图" class="headerlink" title="获取屏幕截图"></a>获取屏幕截图</h3><pre><code>/**
+* 获取当前屏幕截图，包含状态栏
+*/
+public static Bitmap snapShotWithStatusBar(Activity activity) {
+    View view = activity.getWindow().getDecorView();
+    view.setDrawingCacheEnabled(true);
+    view.buildDrawingCache();
+    Bitmap bmp = view.getDrawingCache();
+    int width = getScreenWidth(activity);
+    int height = getScreenHeight(activity);
+    Bitmap bp = null;
+    bp = Bitmap.createBitmap(bmp, 0, 0, width, height);
+    view.destroyDrawingCache();
+    return bp;
+}
+
+/**
+* 获取当前屏幕截图，不包含状态栏
+*/
+public static Bitmap snapShotWithoutStatusBar(Activity activity) {
+    View view = activity.getWindow().getDecorView();
+    view.setDrawingCacheEnabled(true);
+    view.buildDrawingCache();
+    Bitmap bmp = view.getDrawingCache();
+    Rect frame = new Rect();
+    activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+    int statusBarHeight = frame.top;
+    int width = getScreenWidth(activity);
+    int height = getScreenHeight(activity);
+    Bitmap bp = null;
+    bp = Bitmap.createBitmap(bmp, 0, statusBarHeight, width, height
+            - statusBarHeight);
+    view.destroyDrawingCache();
+    return bp;
+}
+</code></pre><h3 id="设置透明状态栏，需在setContentView之前调用"><a href="#设置透明状态栏，需在setContentView之前调用" class="headerlink" title="设置透明状态栏，需在setContentView之前调用"></a>设置透明状态栏，需在setContentView之前调用</h3><pre><code>if(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.KITKAT) {
+    //透明状态栏
+    getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+    //透明导航栏
+    getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+}
+
+// 需在顶部控件布局中加入以下属性让内容出现在状态栏之下
+android:clipToPadding=&quot;true&quot; 
+android:fitsSystemWindows=&quot;true&quot;
+</code></pre><h2 id="键盘相关"><a href="#键盘相关" class="headerlink" title="键盘相关"></a>键盘相关</h2><h3 id="避免输入法面板遮挡"><a href="#避免输入法面板遮挡" class="headerlink" title="避免输入法面板遮挡"></a>避免输入法面板遮挡</h3><pre><code>// 在manifest.xml中activity中设置
+android:windowSoftInputMode=&quot;stateVisible|adjustResize&quot; 
+</code></pre><h2 id="动态隐藏软键盘"><a href="#动态隐藏软键盘" class="headerlink" title="动态隐藏软键盘"></a>动态隐藏软键盘</h2><pre><code>/**
+* 动态隐藏软键盘
+*/
+public static void hideSoftInput(Activity activity) {
+    View view = activity.getWindow().peekDecorView();
+    if (view != null) {
+        InputMethodManager inputmanger = (InputMethodManager) activity
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+}
+
+/**
+* 动态隐藏软键盘
+*/
+public static void hideSoftInput(Context context, EditText edit) {
+    edit.clearFocus();
+    InputMethodManager inputmanger = (InputMethodManager) context
+            .getSystemService(Context.INPUT_METHOD_SERVICE);
+    inputmanger.hideSoftInputFromWindow(edit.getWindowToken(), 0);
+}
+</code></pre><h3 id="点击屏幕空白区域隐藏软键盘"><a href="#点击屏幕空白区域隐藏软键盘" class="headerlink" title="点击屏幕空白区域隐藏软键盘"></a>点击屏幕空白区域隐藏软键盘</h3><pre><code>// 方法1：在onTouch中处理，未获焦点则隐藏
+/**
+* 在onTouch中处理，未获焦点则隐藏
+*/
+@Override
+public boolean onTouchEvent(MotionEvent event) {
+    if (null != this.getCurrentFocus()) {
+        InputMethodManager mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        return mInputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+    }
+    return super.onTouchEvent(event);
+}
+
+// 方法2：根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，需重写dispatchTouchEvent
+@Override
+public boolean dispatchTouchEvent(MotionEvent ev) {
+    if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+        View v = getCurrentFocus();
+        if (isShouldHideKeyboard(v, ev)) {
+            hideKeyboard(v.getWindowToken());
+        }
+    }
+    return super.dispatchTouchEvent(ev);
+}
+
+/**
+* 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘
+*/
+private boolean isShouldHideKeyboard(View v, MotionEvent event) {
+    if (v != null &amp;&amp; (v instanceof EditText)) {
+        int[] l = {0, 0};
+        v.getLocationInWindow(l);
+        int left = l[0],
+                top = l[1],
+                bottom = top + v.getHeight(),
+                right = left + v.getWidth();
+        return !(event.getX() &gt; left &amp;&amp; event.getX() &lt; right
+                &amp;&amp; event.getY() &gt; top &amp;&amp; event.getY() &lt; bottom);
+    }
+    return false;
+}
+
+/**
+* 获取InputMethodManager，隐藏软键盘
+*/
+private void hideKeyboard(IBinder token) {
+    if (token != null) {
+        InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+}
+</code></pre><h3 id="动态显示软键盘"><a href="#动态显示软键盘" class="headerlink" title="动态显示软键盘"></a>动态显示软键盘</h3><pre><code>/**
+* 动态显示软键盘
+*/
+public static void showSoftInput(Context context, EditText edit) {
+    edit.setFocusable(true);
+    edit.setFocusableInTouchMode(true);
+    edit.requestFocus();
+    InputMethodManager inputManager = (InputMethodManager) context
+            .getSystemService(Context.INPUT_METHOD_SERVICE);
+    inputManager.showSoftInput(edit, 0);
+}
+</code></pre><h3 id="切换键盘显示与否状态"><a href="#切换键盘显示与否状态" class="headerlink" title="切换键盘显示与否状态"></a>切换键盘显示与否状态</h3><pre><code>/**
+* 切换键盘显示与否状态
+*/
+public static void toggleSoftInput(Context context, EditText edit) {
+    edit.setFocusable(true);
+    edit.setFocusableInTouchMode(true);
+    edit.requestFocus();
+    InputMethodManager inputManager = (InputMethodManager) context
+            .getSystemService(Context.INPUT_METHOD_SERVICE);
+    inputManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+}
+</code></pre><h2 id="正则相关"><a href="#正则相关" class="headerlink" title="正则相关"></a>正则相关</h2><h3 id="正则工具类"><a href="#正则工具类" class="headerlink" title="正则工具类"></a>正则工具类</h3><pre><code>public class RegularUtils {
+    //验证手机号
+    private static final String REGEX_MOBILE = &quot;^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$&quot;;
+    //验证座机号,正确格式：xxx/xxxx-xxxxxxx/xxxxxxxx
+    private static final String REGEX_TEL = &quot;^0\\d{2,3}[- ]?\\d{7,8}&quot;;
+    //验证邮箱
+    private static final String REGEX_EMAIL = &quot;^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$&quot;;
+    //验证url
+    private static final String REGEX_URL = &quot;http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w-./?%&amp;=]*)?&quot;;
+    //验证汉字
+    private static final String REGEX_CHZ = &quot;^[\\u4e00-\\u9fa5]+$&quot;;
+    //验证用户名,取值范围为a-z,A-Z,0-9,&quot;_&quot;,汉字，不能以&quot;_&quot;结尾,用户名必须是6-20位
+    private static final String REGEX_USERNAME = &quot;^[\\w\\u4e00-\\u9fa5]{6,20}(?&lt;!_)$&quot;;
+    //验证IP地址
+    private static final String REGEX_IP = &quot;((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)&quot;;
+
+    //If u want more please visit http://toutiao.com/i6231678548520731137/
+
+    /**
+     * @param string 待验证文本
+     * @return 是否符合手机号格式
+     */
+    public static boolean isMobile(String string) {
+        return isMatch(REGEX_MOBILE, string);
+    }
+
+    /**
+     * @param string 待验证文本
+     * @return 是否符合座机号码格式
+     */
+    public static boolean isTel(String string) {
+        return isMatch(REGEX_TEL, string);
+    }
+
+    /**
+     * @param string 待验证文本
+     * @return 是否符合邮箱格式
+     */
+    public static boolean isEmail(String string) {
+        return isMatch(REGEX_EMAIL, string);
+    }
+
+    /**
+     * @param string 待验证文本
+     * @return 是否符合网址格式
+     */
+    public static boolean isURL(String string) {
+        return isMatch(REGEX_URL, string);
+    }
+
+    /**
+     * @param string 待验证文本
+     * @return 是否符合汉字
+     */
+    public static boolean isChz(String string) {
+        return isMatch(REGEX_CHZ, string);
+    }
+
+    /**
+     * @param string 待验证文本
+     * @return 是否符合用户名
+     */
+    public static boolean isUsername(String string) {
+        return isMatch(REGEX_USERNAME, string);
+    }
+
+    /**
+     * @param regex  正则表达式字符串
+     * @param string 要匹配的字符串
+     * @return 如果str 符合 regex的正则表达式格式,返回true, 否则返回 false;
+     */
+    public static boolean isMatch(String regex, String string) {
+        return !TextUtils.isEmpty(string) &amp;&amp; Pattern.matches(regex, string);
+    }
+}
+</code></pre><h2 id="加解密相关"><a href="#加解密相关" class="headerlink" title="加解密相关"></a>加解密相关</h2><h3 id="MD5加密"><a href="#MD5加密" class="headerlink" title="MD5加密"></a>MD5加密</h3><pre><code>/**
+* MD5加密
+*/
+public static String encryptMD5(String data) throws Exception {
+    MessageDigest md5 = MessageDigest.getInstance(&quot;MD5&quot;);
+    return new BigInteger(md5.digest(data.getBytes())).toString(16);
+}
+</code></pre><h3 id="SHA加密"><a href="#SHA加密" class="headerlink" title="SHA加密"></a>SHA加密</h3><pre><code>/**
+* SHA加密
+*/
+public static String encryptSHA(String data) throws Exception {
+    MessageDigest sha = MessageDigest.getInstance(&quot;SHA&quot;);
+    return new BigInteger(sha.digest(data.getBytes())).toString(32);
+}
+</code></pre><h2 id="未归类"><a href="#未归类" class="headerlink" title="未归类"></a>未归类</h2><h3 id="获取服务是否开启"><a href="#获取服务是否开启" class="headerlink" title="获取服务是否开启"></a>获取服务是否开启</h3><pre><code>/**
+* 获取服务是否开启
+*/
+public static boolean isRunningService(String className, Context context) {
+    //进程的管理者,活动的管理者
+    ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+    //获取正在运行的服务
+    List&lt;RunningServiceInfo&gt; runningServices = activityManager.getRunningServices(1000);//maxNum 返回正在运行的服务的上限个数,最多返回多少个服务
+    //遍历集合
+    for (RunningServiceInfo runningServiceInfo : runningServices) {
+        //获取控件的标示
+        ComponentName service = runningServiceInfo.service;
+        //获取正在运行的服务的全类名
+        String className2 = service.getClassName();
+        //将获取到的正在运行的服务的全类名和传递过来的服务的全类名比较,一直表示服务正在运行  返回true,不一致表示服务没有运行  返回false
+        if (className.equals(className2)) {
+            return true;
+        }
+    }
+    return false;
+}
+</code></pre></div><footer class="article-footer clearfix"><div class="article-catetags"><div class="article-categories"><span></span> <a class="article-category-link" href="/categories/Android/">Android</a></div><div class="article-tags"><span></span> <a href="/tags/Android/">Android</a></div></div><div class="article-share" id="share"><div class="share-jiathis"><div class="jiathis_style_24x24"><a class="jiathis_button_tsina"></a> <a class="jiathis_button_weixin"></a> <a class="jiathis_button_renren"></a> <a class="jiathis_button_qzone"></a> <a class="jiathis_button_googleplus"></a> <a class="jiathis_button_douban"></a> <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a> <a class="jiathis_counter_style"></a></div><script type="text/javascript">var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",</script><script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script></div></div><div class="article-share" id="share"><div class="share-jiathis"><div class="jiathis_style_24x24"><a class="jiathis_button_tsina"></a> <a class="jiathis_button_weixin"></a> <a class="jiathis_button_renren"></a> <a class="jiathis_button_qzone"></a> <a class="jiathis_button_googleplus"></a> <a class="jiathis_button_douban"></a> <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a> <a class="jiathis_counter_style"></a></div><script type="text/javascript">var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",</script><script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script></div></div></footer></article><nav class="article-nav clearfix"><div class="prev"><a href="/xinliu/64d0b5f2/" title="Android studio使用过程中遇到的问题"><strong>上一篇：</strong><br><span>Android studio使用过程中遇到的问题</span></a></div></nav><div id="lv-container" data-id="city" data-uid="MTAyMC8zMzQ2Ny8xMDAyMw=="><script type="text/javascript">!function(e,t){var n,c=e.getElementsByTagName(t)[0];"function"!=typeof LivereTower&&((n=e.createElement(t)).src="https://cdn-city.livere.com/js/embed.dist.js",n.async=!0,c.parentNode.insertBefore(n,c))}(document,"script")</script><noscript>为正常使用来必力评论功能请激活JavaScript</noscript></div></div><div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div><div id="toc" class="toc-aside"><strong class="toc-title">文章目录</strong><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#尺寸相关"><span class="toc-number">1.</span> <span class="toc-text">尺寸相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dp与px转换"><span class="toc-number">1.1.</span> <span class="toc-text">dp与px转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sp与px转换"><span class="toc-number">1.2.</span> <span class="toc-text">sp与px转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#各种单位转换"><span class="toc-number">1.3.</span> <span class="toc-text">各种单位转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在onCreate-即可获取View的宽高"><span class="toc-number">1.4.</span> <span class="toc-text">在onCreate()即可获取View的宽高</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ListView中提前测量View尺寸"><span class="toc-number">1.5.</span> <span class="toc-text">ListView中提前测量View尺寸</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手机相关"><span class="toc-number">2.</span> <span class="toc-text">手机相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#判断设备是否是手机"><span class="toc-number">2.1.</span> <span class="toc-text">判断设备是否是手机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取当前设备的IMIE，需与上面的isPhone一起使用"><span class="toc-number">2.2.</span> <span class="toc-text">获取当前设备的IMIE，需与上面的isPhone一起使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取手机状态信息"><span class="toc-number">2.3.</span> <span class="toc-text">获取手机状态信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#是否有SD卡"><span class="toc-number">2.4.</span> <span class="toc-text">是否有SD卡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取MAC地址"><span class="toc-number">2.5.</span> <span class="toc-text">获取MAC地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取手机厂商，如Xiaomi"><span class="toc-number">2.6.</span> <span class="toc-text">获取手机厂商，如Xiaomi</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取手机型号，如MI2SC"><span class="toc-number">2.7.</span> <span class="toc-text">获取手机型号，如MI2SC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#跳转至拨号界面"><span class="toc-number">2.8.</span> <span class="toc-text">跳转至拨号界面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拨打电话"><span class="toc-number">2.9.</span> <span class="toc-text">拨打电话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发送短信"><span class="toc-number">2.10.</span> <span class="toc-text">发送短信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取手机联系人"><span class="toc-number">2.11.</span> <span class="toc-text">获取手机联系人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#直接打开手机联系人界面，并获取联系人号码"><span class="toc-number">2.12.</span> <span class="toc-text">直接打开手机联系人界面，并获取联系人号码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取手机短信并保存到xml中"><span class="toc-number">2.13.</span> <span class="toc-text">获取手机短信并保存到xml中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络相关"><span class="toc-number">3.</span> <span class="toc-text">网络相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#打开网络设置界面"><span class="toc-number">3.1.</span> <span class="toc-text">打开网络设置界面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断是否网络连接"><span class="toc-number">3.2.</span> <span class="toc-text">判断是否网络连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断wifi是否连接状态"><span class="toc-number">3.3.</span> <span class="toc-text">判断wifi是否连接状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取移动网络运营商名称，如中国联通、中国移动、中国电信"><span class="toc-number">3.4.</span> <span class="toc-text">获取移动网络运营商名称，如中国联通、中国移动、中国电信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#返回移动终端类型"><span class="toc-number">3.5.</span> <span class="toc-text">返回移动终端类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断手机连接的网络类型-2G-3G-4G"><span class="toc-number">3.6.</span> <span class="toc-text">判断手机连接的网络类型(2G,3G,4G)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断当前手机的网络类型-WIFI还是2-3-4G"><span class="toc-number">3.7.</span> <span class="toc-text">判断当前手机的网络类型(WIFI还是2,3,4G)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#App相关"><span class="toc-number">4.</span> <span class="toc-text">App相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装指定路径下的Apk"><span class="toc-number">4.1.</span> <span class="toc-text">安装指定路径下的Apk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#卸载指定包名的App"><span class="toc-number">4.2.</span> <span class="toc-text">卸载指定包名的App</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取App名称"><span class="toc-number">4.3.</span> <span class="toc-text">获取App名称</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取当前App版本号"><span class="toc-number">4.4.</span> <span class="toc-text">获取当前App版本号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取当前App版本Code"><span class="toc-number">4.5.</span> <span class="toc-text">获取当前App版本Code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#打开指定包名的App应用信息界面"><span class="toc-number">4.6.</span> <span class="toc-text">打开指定包名的App应用信息界面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分享Apk信息"><span class="toc-number">4.7.</span> <span class="toc-text">分享Apk信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取App信息的一个封装类-包名、版本号、应用信息、图标、名称等"><span class="toc-number">4.8.</span> <span class="toc-text">获取App信息的一个封装类(包名、版本号、应用信息、图标、名称等)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断当前App处于前台还是后台"><span class="toc-number">4.9.</span> <span class="toc-text">判断当前App处于前台还是后台</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#屏幕相关"><span class="toc-number">5.</span> <span class="toc-text">屏幕相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取手机分辨率"><span class="toc-number">5.1.</span> <span class="toc-text">获取手机分辨率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取状态栏高度"><span class="toc-number">5.2.</span> <span class="toc-text">获取状态栏高度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取状态栏高度＋标题栏-ActionBar-高度"><span class="toc-number">5.3.</span> <span class="toc-text">获取状态栏高度＋标题栏(ActionBar)高度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取屏幕截图"><span class="toc-number">5.4.</span> <span class="toc-text">获取屏幕截图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置透明状态栏，需在setContentView之前调用"><span class="toc-number">5.5.</span> <span class="toc-text">设置透明状态栏，需在setContentView之前调用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#键盘相关"><span class="toc-number">6.</span> <span class="toc-text">键盘相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#避免输入法面板遮挡"><span class="toc-number">6.1.</span> <span class="toc-text">避免输入法面板遮挡</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态隐藏软键盘"><span class="toc-number">7.</span> <span class="toc-text">动态隐藏软键盘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#点击屏幕空白区域隐藏软键盘"><span class="toc-number">7.1.</span> <span class="toc-text">点击屏幕空白区域隐藏软键盘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态显示软键盘"><span class="toc-number">7.2.</span> <span class="toc-text">动态显示软键盘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#切换键盘显示与否状态"><span class="toc-number">7.3.</span> <span class="toc-text">切换键盘显示与否状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正则相关"><span class="toc-number">8.</span> <span class="toc-text">正则相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#正则工具类"><span class="toc-number">8.1.</span> <span class="toc-text">正则工具类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加解密相关"><span class="toc-number">9.</span> <span class="toc-text">加解密相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MD5加密"><span class="toc-number">9.1.</span> <span class="toc-text">MD5加密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SHA加密"><span class="toc-number">9.2.</span> <span class="toc-text">SHA加密</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#未归类"><span class="toc-number">10.</span> <span class="toc-text">未归类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取服务是否开启"><span class="toc-number">10.1.</span> <span class="toc-text">获取服务是否开启</span></a></li></ol></li></ol></div><div id="asidepart"><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div><aside class="clearfix"><div style="width:300px;height:150px;transform:scale(.7);margin:0;margin-left:-50px;margin-bottom:-65px;margin-top:10px"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=355992&auto=0&height=66"></iframe></div><div class="github-card"><p class="asidetitle">Github</p><div class="github-card" data-github="EARL8888" data-theme="medium"></div><script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script></div><div class="categorieslist"><p class="asidetitle">分类</p><ul><li><a href="/categories/Android/" title="Android">Android<sup>5</sup></a></li><li><a href="/categories/AngularJS-01/" title="AngularJS_01">AngularJS_01<sup>1</sup></a></li><li><a href="/categories/CSS/" title="CSS">CSS<sup>1</sup></a></li><li><a href="/categories/Ionic/" title="Ionic">Ionic<sup>1</sup></a></li><li><a href="/categories/git/" title="git">git<sup>1</sup></a></li><li><a href="/categories/gulp/" title="gulp">gulp<sup>1</sup></a></li><li><a href="/categories/hexo/" title="hexo">hexo<sup>10</sup></a></li><li><a href="/categories/java/" title="java">java<sup>1</sup></a></li></ul></div><div class="tagslist"><p class="asidetitle">标签</p><ul class="clearfix"><li><a href="/tags/hexo/" title="hexo">hexo<sup>10</sup></a></li><li><a href="/tags/Android/" title="Android">Android<sup>5</sup></a></li><li><a href="/tags/CSS/" title="CSS">CSS<sup>1</sup></a></li><li><a href="/tags/AngularJS-01/" title="AngularJS_01">AngularJS_01<sup>1</sup></a></li><li><a href="/tags/Ionic/" title="Ionic">Ionic<sup>1</sup></a></li><li><a href="/tags/gulp/" title="gulp">gulp<sup>1</sup></a></li><li><a href="/tags/java/" title="java">java<sup>1</sup></a></li><li><a href="/tags/git/" title="git">git<sup>1</sup></a></li></ul></div><div class="linkslist"><p class="asidetitle">友情链接</p><ul><li><a href="http://www.cnblogs.com/earl-yongchang/" target="_blank" title=" 以前写作博客">博客园</a></li><li><a href="http://www.infoq.com/cn/" target="_blank" title=" 促进软件开发领域知识与创新的传播">InfoQ</a></li><li><a href="https://sdk.cn/" target="_blank" title=" 中国领先的开发者服务">开发者服务</a></li></ul></div><div class="weiboshow"><p class="asidetitle">新浪微博</p><iframe width="100%" height="119" class="share_self" frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=5807798537&verifier=5fcd6856&dpc=1"></iframe></div></aside></div></div><footer><div id="footer"><div class="line"><span></span><div class="author"></div></div><section class="info"><p>Keep Calm<br>Carry On</p></section><div class="social-font" class="clearfix"><a href="http://weibo.com/5807798537" target="_blank" class="icon-weibo" title="微博"></a> <a href="https://github.com/EARL8888" target="_blank" class="icon-github" title="github"></a> <a href="mailto:z604458675@gmail.com" target="_blank" class="icon-email" title="Email Me"></a></div><p class="copyright">2018 <a href="/about" target="_blank" title="earl">earl</a></p></div><div style="text-align:center;margin-top:10px"><span id="busuanzi_container_site_uv">本站访客数 <span id="busuanzi_value_site_uv"></span> 人次</span></div><script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></footer><script src="/js/jquery-2.0.3.min.js"></script><script src="/js/jquery.imagesloaded.min.js"></script><script src="/js/gallery.js"></script><script src="/js/jquery.qrcode-0.12.0.min.js"></script><script type="text/javascript">$(document).ready(function(){$(".navbar").click(function(){$("header nav").toggleClass("shownav")});var e=0,s=$("#main"),n=$("#asidepart"),a=$(".closeaside"),o=$(".openaside");a.click(function(){n.addClass("fadeOut").css("display","none"),o.css("display","block").addClass("fadeIn"),s.addClass("moveMain")}),o.click(function(){o.css("display","none").removeClass("beforeFadeIn"),n.css("display","block").removeClass("fadeOut").addClass("fadeIn"),s.removeClass("moveMain")}),$(window).scroll(function(){o.css("top",Math.max(80,260-$(this).scrollTop()))}),$(window).resize(function(){"number"==typeof window.innerWidth?e=window.innerWidth:document.documentElement&&document.documentElement.clientWidth&&(e=document.documentElement.clientWidth),1024<=e?$("header nav").removeClass("shownav"):(s.removeClass("moveMain"),n.css("display","block").removeClass("fadeOut"),o.css("display","none"),$("#toc.toc-aside").css("display","none"))})})</script><script type="text/javascript">$(document).ready(function(){var c=$(".article-content>iframe"),n=$(".article-content>embed"),o=($("#toc"),$("#toc.toc-aside")),e=$(".openaside"),i=$(".closeaside");0<c.length&&c.wrap('<div class="video-container" />'),0<n.length&&n.wrap('<div class="video-container" />'),i.click(function(){o.css("display","block").addClass("fadeIn")}),e.click(function(){o.css("display","none")}),$(window).scroll(function(){o.css("top",Math.max(140,320-$(this).scrollTop()))})})</script><link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css"><script src="/fancybox/jquery.fancybox.pack.js"></script><script type="text/javascript">$(document).ready(function(){$(".article-content").each(function(a){$(this).find("img").each(function(){if(!$(this).parent().hasClass("fancybox")){var a=this.alt;a&&$(this).after('<span class="caption">'+a+"</span>"),$(this).wrap('<a href="'+this.src+'" title="'+a+'" class="fancybox"></a>')}}),$(this).find(".fancybox").each(function(){$(this).attr("rel","article"+a)})}),$.fancybox&&$(".fancybox").fancybox()})</script><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="//hm.baidu.com/hm.js?9cb7c9412facfcf7eb85cb0d0f7734cf";var c=document.getElementsByTagName("script")[0];c.parentNode.insertBefore(e,c)}()</script><div id="totop"><a title="返回顶部"><img src="/img/scrollup.png"></a></div><script src="/js/totop.js"></script></body>
